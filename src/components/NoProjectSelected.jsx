@@ -1,7 +1,7 @@
 import Button from "./Buttons";
 // import an image
 
-export default function NoProjectSelected() {
+export default function NoProjectSelected({onStartAddProject}) {
   return (
     <div className="mt-2 text-center w-2/3">
       <img />
@@ -10,7 +10,7 @@ export default function NoProjectSelected() {
       </h2>
       <p className="text-emerald-400 mb-4">Select a project or create a new one</p>
       <p className="mt-8">
-        <Button>Create new project</Button>
+        <Button onClick={onStartAddProject} >Create new project</Button>
       </p>
     </div>
   );

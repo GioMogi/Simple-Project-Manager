@@ -20,24 +20,35 @@ function App() {
 
   function handleAddProject(projectData) {
     setProjectsState((prevState) => {
+      const projectId = Math.random();
       const newProject = {
         ...projectData,
-        id: Math.random(),
+        id: projectId,
       };
 
       return {
         ...prevState,
+        selectedProjectId: undefined,
         projects: [...prevState.projects, newProject],
       };
     });
   }
 
-  console.log(projectsState);
+  function handleCancelAddProject() {
+    setProjectsState((prev) => {
+      return {
+        ...prev,
+        selectedProjectId: undefined,
+      };
+    });
+  }
 
   let content;
 
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject onAdd={handleAddProject} />;
+    content = (
+      <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject} />
+    );
   } else if (projectsState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
@@ -45,7 +56,10 @@ function App() {
   return (
     <>
       <main className="h-screen my-8 flex gap-8">
-        <ProjectsSideBar onStartAddProject={handleStartAddProject} />
+        <ProjectsSideBar
+          onStartAddProject={handleStartAddProject}
+          projects={projectsState.projects}
+        />
         {content}
       </main>
     </>
